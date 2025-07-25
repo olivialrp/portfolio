@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import './App.css'; // Import the CSS file
+import { useState } from 'react'; // FIX: Removed unused 'React' import
+import './App.css';
+
+// --- Define a type for our page names for type safety ---
+type PageName = 'home' | 'projects' | 'articles' | 'about';
 
 // --- Helper: Icon Components (Self-contained SVGs) ---
 const LinkedInIcon = () => (
@@ -38,7 +41,12 @@ const ArrowLeftIcon = () => (
 
 // --- Page Components ---
 
-const HomePage = ({ onNavigate }) => (
+// FIX: Added types for the component's props
+interface HomePageProps {
+    onNavigate: (page: PageName) => void;
+}
+
+const HomePage = ({ onNavigate }: HomePageProps) => (
     <>
         <div className="social-links-container">
             {portfolioData.socials.map((social) => (
@@ -66,15 +74,14 @@ const HomePage = ({ onNavigate }) => (
 const ProjectsPage = () => (
     <div className="page-content">
         <h2>My Projects</h2>
-        <p>This is where I will list my projects.</p>
-        {/* Example Project */}
+        <p>This is where I will list my projects</p>
         <div className="project-item">
             <h3>Project One</h3>
-            <p>A brief description of my first project.</p>
+            <p>A brief description here.</p>
         </div>
         <div className="project-item">
             <h3>Project Two</h3>
-            <p>A brief description of my second project.</p>
+            <p>A brief description here</p>
         </div>
     </div>
 );
@@ -89,7 +96,7 @@ const ArticlesPage = () => (
 const AboutMePage = () => (
     <div className="page-content">
         <h2>About Me</h2>
-        <p>I am a Fullstack developer from Brazil. My stack spans back-end development with Python (Django) and Java (Spring Boot), and front-end development with React and TypeScript. I also got skills in data analysis and visualization, leveraging Python libraries like Pandas, NumPy, and Streamlit. I am deeply passionate about technology on a general scope since I was a kid, and since 2022, specifically on software development. </p>
+        <p>I am a Fullstack developer from Brazil. My stack spans back-end development with Python (Django) and Java (Spring Boot), and front-end development with React and TypeScript. I also got skills in data analysis and visualization, leveraging Python libraries like Pandas, NumPy, and Streamlit. I am deeply passionate about technology on a general scope since I was a kid, and since 2022, specifically on software development.</p>
     </div>
 );
 
@@ -97,29 +104,30 @@ const AboutMePage = () => (
 // --- Main App Data ---
 const portfolioData = {
     name: "Olívia Lauar",
-    title: "Fullstack developer",
+    title: "Fullstack Developer",
     socials: [
         { name: "LinkedIn", url: "https://www.linkedin.com/in/mariana-olivia-lauar/", icon: <LinkedInIcon /> },
         { name: "GitHub", url: "https://github.com/olivialrp", icon: <GitHubIcon /> },
     ],
     navLinks: [
-        { id: 'home', name: "Home" },
-        { id: 'projects', name: "Projects" },
-        { id: 'articles', name: "Articles" },
-        { id: 'about', name: "About Me" },
+        { id: 'home' as PageName, name: "Home" },
+        { id: 'projects' as PageName, name: "Projects" },
+        { id: 'articles' as PageName, name: "Articles" },
+        { id: 'about' as PageName, name: "About Me" },
     ],
     pageLinks: [
-        { id: 'projects', name: "My projects" },
-        { id: 'articles', name: "My articles" },
-        { id: 'about', name: "About me" },
+        { id: 'projects' as PageName, name: "See my projects" },
+        { id: 'articles' as PageName, name: "Read my articles" },
+        { id: 'about' as PageName, name: "About me" },
     ],
 };
 
 
 export default function App() {
-    const [currentPage, setCurrentPage] = useState('home');
+    const [currentPage, setCurrentPage] = useState<PageName>('home');
 
-    const handleNavigate = (page) => {
+    // FIX: Added the 'PageName' type to the 'page' parameter
+    const handleNavigate = (page: PageName) => {
         setCurrentPage(page);
     };
 
