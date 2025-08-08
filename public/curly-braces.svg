@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <text
+    x="50"
+    y="50"
+    font-family="monospace"
+    font-size="90"
+    text-anchor="middle"
+    dy=".3em"
+    fill="#111827">
+    {}
+  </text>
+</svg>
